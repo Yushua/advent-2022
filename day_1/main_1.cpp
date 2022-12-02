@@ -5,7 +5,7 @@
 #include <string>
 
 int main(){
-    std::ifstream infile("text_1");
+    std::ifstream infile("text_1.txt");
 
     std::string line;
 

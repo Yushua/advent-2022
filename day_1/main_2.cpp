@@ -7,7 +7,7 @@
 #include <array>
 
 int main(){
-    std::ifstream infile("text_2");
+    std::ifstream infile("text_2.txt");
 
     std::string line;
 
