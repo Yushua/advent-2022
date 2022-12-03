@@ -27,7 +27,23 @@ int main(){
         std::getline(infile, line);
         std::istringstream iss3(line);
         iss3 >> c;
-        std::cout << a << " " << b << " " << c  << std::endl;
+        int i = 0;
+        while (i < a.length()){
+            if (b.find_first_of(a[i]) != std::string::npos && c.find_first_of(a[i]) != std::string::npos){
+                break;
+            }
+            i++;
+        }
+        char d = a[i];
+        i = 0;
+        if (d >= 'a' && d <= 'z'){
+            i = d - 96;
+        }
+        else {
+            i = d - 38;
+        }
+        score += i;
+        std::cout << d << std::endl;
     }
     std::cout << "score == " << score << std::endl;
     return (0);
