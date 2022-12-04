@@ -78,6 +78,7 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "xlocmon": "cpp",
-        "xloctime": "cpp"
+        "xloctime": "cpp",
+        "list": "cpp"
     }
 }
