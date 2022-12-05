@@ -79,6 +79,8 @@
         "xutility": "cpp",
         "xlocmon": "cpp",
         "xloctime": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "map": "cpp",
+        "xtree": "cpp"
     }
 }
