@@ -21,8 +21,19 @@ int main(){
         
         std::istringstream iss(line);
         iss >> a;
-        startMoney:
-        if (a == "$"){
+        if (a.find_first_of("0123456789") != std::string::npos)
+        {
+            int long size = atoi(a.c_str());
+            for (std::string n : position){
+                std::map<std::string, long int>::iterator it;
+                for (it = dirSize.begin(); it != dirSize.end(); it++){
+                    if (n == it->first){
+                        it->second += size;
+                    }
+                }
+            }
+        }
+        else if (a == "$"){
             iss >> a;
             if (a == "cd")
             {
@@ -35,36 +46,18 @@ int main(){
                     dirSize.insert(std::pair<std::string, long int>(a, 0));
                 }
             }
-            else if (a == "ls"){
-                while (true)
-                {
-                    std::getline(infile, line);
-                    std::istringstream iss(line);
-                    iss >> a;
-                    if (a == "$")
-                    {
-                        goto startMoney;
-                    }
-                    if (a.find_first_of("0123456789") == std::string::npos){
-                        int long size = atoi(a.c_str());
-                        for (std::string n : position){
-                            std::map<std::string, long int>::iterator it;
-                            for (it = dirSize.begin(); it != dirSize.end(); it++){
-                                if (n == it->first){
-                                    it->second += size;
-                                }
-                            }
-                        }
-
-                    }
-                }
-            }
         }
     }
+    int long score = 0;
     std::map<std::string, long int>::iterator it;
     for (it = dirSize.begin(); it != dirSize.end(); it++){
-        std::cout << "name [" << it->first << "] size [" << it->second << "]\n";
+        // std::cout << "name [" << it->first << "] size [" << it->second << "]\n";
+        if (it->second <= 100000){
+            score += it->second;
+            std::cout << "name [" << it->first << "] size [" << it->second << "]\n";
+        }
     }
+    std::cout << "score [" << score << "]\n";
     return (0);
 }
 
