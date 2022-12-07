@@ -21,9 +21,11 @@ int main(){
         
         std::istringstream iss(line);
         iss >> a;
+        startMoney:
         if (a == "$"){
             iss >> a;
-            if (a == "cd"){
+            if (a == "cd")
+            {
                 iss >> a;
                 if (a == ".."){
                     position.pop_back();
@@ -34,17 +36,27 @@ int main(){
                 }
             }
             else if (a == "ls"){
-                if (a.find_first_of("0123456789") == std::string::npos){
-                    int long size = atoi(a.c_str());
-                    for (std::string n : position){
-                        std::map<std::string, long int>::iterator it;
-                        for (it = dirSize.begin(); it != dirSize.end(); it++){
-                            if (n == it->first){
-                                it->second += size;
+                while (true)
+                {
+                    std::getline(infile, line);
+                    std::istringstream iss(line);
+                    iss >> a;
+                    if (a == "$")
+                    {
+                        goto startMoney;
+                    }
+                    if (a.find_first_of("0123456789") == std::string::npos){
+                        int long size = atoi(a.c_str());
+                        for (std::string n : position){
+                            std::map<std::string, long int>::iterator it;
+                            for (it = dirSize.begin(); it != dirSize.end(); it++){
+                                if (n == it->first){
+                                    it->second += size;
+                                }
                             }
                         }
-                    }
 
+                    }
                 }
             }
         }
