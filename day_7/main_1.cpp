@@ -30,6 +30,7 @@ int main(){
                 }
                 else {
                     position.push_back(a);
+                    dirSize.insert(std::pair<std::string, long int>(a, 0));
                 }
             }
             else if (a == "ls"){
