@@ -31,16 +31,6 @@ int main(){
 
     while (std::getline(infile, line))
     {
-        /* plan d, 
-        
-        when you see dir you add to it
-        when c you add - to it to know that. you are now in that multi thread
-        
-        this way by adding to it, you always know ALL the directories you're in
-        
-        then when its .. you remove till you find -
-        
-        */
 
         std::istringstream iss(line);
         iss >> a;
@@ -76,7 +66,6 @@ int main(){
         }
     }
 
-    int long score = 0;
     std::map<std::string, long int>::iterator it;
     int size_space = 70000000;
     int spaceLeft = 1316134911;
