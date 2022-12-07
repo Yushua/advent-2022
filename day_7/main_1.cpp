@@ -8,17 +8,27 @@
 #include <list>
 
 int main(){
-    std::ifstream infile("text_1.txt");
+    std::ifstream infileTmp("text_1.txt");
 
     std::string line;
-    std::list<std::string> position;
-    std::list<std::string> allDir;
+    std::list<std::string> pwd;
 
     std::string a;
 
-    std::map<std::string, long int> dirSize;
-    std::map<std::string, long int> dirSizeExtra;
-    allDir.push_back("/");
+    std::map<std::string, long int> directories;
+    directories.insert(std::pair<std::string, long int>("/", 0));
+    while (std::getline(infileTmp, line)){
+        std::istringstream iss(line);
+        iss >> a;
+        if (a == "dir"){
+            iss >> a;
+            /* addig director */
+            directories.insert(std::pair<std::string, long int>(a, 0));
+        }
+    }
+
+    std::ifstream infile("text_1.txt");
+
     while (std::getline(infile, line))
     {
         /* plan d, 
@@ -37,28 +47,19 @@ int main(){
         if (a.find_first_of("0123456789") != std::string::npos)
         {
             int long size = atoi(a.c_str());
-            for (std::string n : position){
+            for (std::string n : pwd){
                 std::map<std::string, long int>::iterator it;
-                for (it = dirSize.begin(); it != dirSize.end(); it++){
+                int check = 0;
+                for (it = directories.begin(); it != directories.end(); it++){
                     if (n == it->first){
                         it->second += size;
+                        check = 1;
                     }
                 }
-            }
-            /* adding all to the*/
-            for (std::string n : allDir){
-                std::map<std::string, long int>::iterator it;
-                for (it = dirSizeExtra.begin(); it != dirSizeExtra.end(); it++){
-                    if (n == it->first){
-                        it->second += size;
-                    }
+                if (check == 0){
+                    std::cout << "name [" << n << "]\n";
                 }
             }
-        }
-        else if (a == "dir"){
-            iss >> a;
-            /* now havin added the dir */
-            allDir.push_back(a);
         }
         else if (a == "$"){
             iss >> a;
@@ -66,17 +67,10 @@ int main(){
             {
                 iss >> a;
                 if (a == ".."){
-                    position.pop_back();
-                    //loop through all dir, until you see -
-                    while (allDir.back() != "-"){
-                        allDir.pop_back();
-                    }
+                    pwd.pop_back();
                 }
                 else {
-                    position.push_back(a);
-                    allDir.push_back("-");
-                    dirSize.insert(std::pair<std::string, long int>(a, 0));
-                    dirSizeExtra.insert(std::pair<std::string, long int>(a, 0));
+                    pwd.push_back(a);
                 }
             }
         }
@@ -84,20 +78,13 @@ int main(){
 
     int long score = 0;
     std::map<std::string, long int>::iterator it;
-    for (it = dirSize.begin(); it != dirSize.end(); it++){
+    for (it = directories.begin(); it != directories.end(); it++){
         if (it->second <= 100000){
             score += it->second;
             // std::cout << "name [" << it->first << "] size [" << it->second << "]\n";
         }
     }
     std::cout << "1score [" << score << "]\n";
-    for (it = dirSizeExtra.begin(); it != dirSizeExtra.end(); it++){
-        if (it->second <= 100000){
-            score += it->second;
-            // std::cout << "name [" << it->first << "] size [" << it->second << "]\n";
-        }
-    }
-    std::cout << "2score [" << score << "]\n";
     return (0);
 }
 

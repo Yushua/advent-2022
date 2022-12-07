@@ -81,6 +81,7 @@
         "xloctime": "cpp",
         "list": "cpp",
         "map": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "__tree": "cpp"
     }
 }
