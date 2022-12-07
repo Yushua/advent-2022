@@ -76,8 +76,7 @@ int main(){
             size_space -= it->second;
         }
         else {
-            int store = 30000000 - size_space;
-            store = it->second - store;
+            int store = it->second - (30000000 - size_space);
             if (store < spaceLeft && store >= 0){
                 spaceLeft = store;
                 sizeCut = it->second;
