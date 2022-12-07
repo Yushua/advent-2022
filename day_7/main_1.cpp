@@ -57,8 +57,8 @@ int main(){
         }
         else if (a == "dir"){
             iss >> a;
-            allDir.push_back(a);
             /* now havin added the dir */
+            allDir.push_back(a);
         }
         else if (a == "$"){
             iss >> a;
