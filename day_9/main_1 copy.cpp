@@ -8,30 +8,36 @@ int map[1000][1000];
 int S[]= {500, 500};
 int H[]= {500, 500};
 int L[]= {500, 500};
+int H_lastPosition[]= {500, 500};
+
+bool checkCordinates(int y, int x, int cy, int cx){
+    if (y == cy && x == cx){
+        return (true);
+    }
+    return (false);
+}
 
 void checkL(){
     int yH = H[0];
     int xH = H[1];
     int yL = L[0];
     int xL = L[1];
-    int y = yH - yL;
-    int x = xH - xL;
-
-    if (y < 0){
-        y++;
+    //toprow
+    if (checkCordinates(yL, xL, yH - 1, xH - 1) || checkCordinates(yL, xL, yH - 1, xH) || checkCordinates(yL, xL, yH - 1, xH + 1)
+        || checkCordinates(yL, xL, yH, xH - 1) || checkCordinates(yL, xL, yH, xH + 1)
+        || checkCordinates(yL, xL, yH + 1, xH - 1) || checkCordinates(yL, xL, yH + 1, xH) || checkCordinates(yL, xL, yH + 1, xH + 1))
+        {
+            std::cout << "hey\n";
+            return ;
+        }
+    else {
+        std::cout << "hey add\n";
+        L[0] = H_lastPosition[0];
+        L[1] = H_lastPosition[1];
+        std::cout << "score " << map[L[0]][L[1]] << std::endl;
+        map[L[0]][L[1]] = 1;
+        std::cout << "score " << map[L[0]][L[1]] << std::endl;
     }
-    else if (y > 0){
-        y--;
-    }
-    L[0] += y;
-    if (x < 0){
-        x++;
-    }
-    else if (x > 0){
-        x--;
-    }
-    L[1] += x;
-    map[L[0]][L[1]] = 1;
     return ;
 }
 
@@ -42,14 +48,13 @@ for example, if H and L are on the same Y, then I should move towards it. maybe 
 same with if they're on the same X, subtract Y
 if now, then substract ALL both of them? or I could just do that always?
 
-what if the answer is that the position change needs to be in checkL for example xH = 4 and lx = 2 after xH moved one right. then xH - xL = 2 and add that to xL will get me 4
-
-if xH was 2 and lX 4 then xH - lX = -2 and add that to lX == yL BUT, then I need to substract or add so it doesn't BECOME the same one
 */
 void directionRight(int move){
     for (int i = 0; i < move; i++){
         H[1]++;
         checkL();
+        H_lastPosition[0] = H[0];
+        H_lastPosition[1] = H[1];
         std::cout << H[0] << " " << H[1] <<" | left " << L[0] << " " << L[1] << std::endl;
     }
 }
@@ -58,6 +63,8 @@ void directionLeft(int move){
     for (int i = 0; i < move; i++){
         H[1]--;
         checkL();
+        H_lastPosition[0] = H[0];
+        H_lastPosition[1] = H[1];
         std::cout << H[0] << " " << H[1] <<" | left " << L[0] << " " << L[1] << std::endl;
     }
 }
@@ -66,6 +73,8 @@ void directionUp(int move){
     for (int i = 0; i < move; i++){
         H[0]--;
         checkL();
+        H_lastPosition[0] = H[0];
+        H_lastPosition[1] = H[1];
         std::cout << H[0] << " " << H[1] <<" | left " << L[0] << " " << L[1] << std::endl;
     }
 }
@@ -74,6 +83,8 @@ void directionDown(int move){
     for (int i = 0; i < move; i++){
         H[0]++;
         checkL();
+        H_lastPosition[0] = H[0];
+        H_lastPosition[1] = H[1];
         std::cout << H[0] << " " << H[1] <<" | left " << L[0] << " " << L[1] << std::endl;
     }
 }
