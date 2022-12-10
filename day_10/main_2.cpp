@@ -3,7 +3,7 @@
 #include <sstream>
 
 #include <string>
-std::string map[6][40];
+std::string map[1][40];
 
 int main(){
     std::ifstream infile("text_1.txt");
@@ -14,10 +14,8 @@ int main(){
     int check = 20;
     int loops = 0;
     int score = 0;
-    for (int i = 0; i < 6; i++){
-        for (int x = 0; x < 40; x++){
-            map[i][x] = ".";
-        }
+    for (int x = 0; x < 40; x++){
+        map[0][x] = ".";
     }
     int y = 0;
     while (std::getline(infile, line))
@@ -35,13 +33,14 @@ int main(){
             iss >> increase;
         }
         for (int i = 0; i < loops; i++){
-            //problem is here, the loop seems to be... malfunctioning
-            //it overrides the first line for some reason?
-            if ( cycle <= 40){
-                y = 0;
-            }
-            else if (cycle%40 == 0 && cycle > 40){
-                y++;
+            if (cycle%40 == 0 && cycle > 0){
+                for (int x = 0; x < 40; x++){
+                    std::cout << map[0][x];
+                }
+                for (int x = 0; x < 40; x++){
+                    map[0][x] = ".";
+                }
+                std::cout << "\n";
             }
             int pos = cycle%40;
             if (position - 1 == pos || position == pos || position + 1 == pos){
@@ -63,15 +62,12 @@ int main(){
             score += (cycle * position);
         }
         position += increase;
-        std::cout << " X == " << position << std::endl;
+        // std::cout << " X == " << position << std::endl;
     }
-    std::cout << "\n\n" << y << "\n\n";
-    for (int i = 0; i < 6; i++){
-        for (int x = 0; x < 40; x++){
-            std::cout << map[i][x];
-        }
-        std::cout << "\n";
+    for (int x = 0; x < 40; x++){
+        std::cout << map[0][x];
     }
+    std::cout << "\n\n";
     std::cout << "score " << cycle << std::endl;
     return (0);
 }
