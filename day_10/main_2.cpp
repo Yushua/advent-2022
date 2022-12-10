@@ -3,16 +3,23 @@
 #include <sstream>
 
 #include <string>
+std::string map[6][40];
 
 int main(){
     std::ifstream infile("text_1.txt");
 
     std::string line;
     int cycle = 0;
-    int X = 1;
+    int position = 1;
     int check = 20;
     int loops = 0;
     int score = 0;
+    for (int i = 0; i < 6; i++){
+        for (int x = 0; x < 40; x++){
+            map[i][x] = ".";
+        }
+    }
+    int y = 0;
     while (std::getline(infile, line))
     {
         std::istringstream iss(line);
@@ -28,33 +35,43 @@ int main(){
             iss >> increase;
         }
         for (int i = 0; i < loops; i++){
-            if (cycle%40 == 0){
-                std::cout << "\n";
+            //problem is here, the loop seems to be... malfunctioning
+            //it overrides the first line for some reason?
+            if ( cycle <= 40){
+                y = 0;
+            }
+            else if (cycle%40 == 0 && cycle > 40){
+                y++;
+            }
+            int pos = cycle%40;
+            if (position - 1 == pos || position == pos || position + 1 == pos){
+                map[y][pos] = "#";
+            }
+            else{
+                map[y][pos] = ".";
             }
             if (cycle >= 20){
-                if (exection == "addx"){
-                    std::cout << ".";
-                }
                 if (cycle == check || cycle == 20){
                     check += 40;
-                    // std::cout << "result == " << cycle * X << " X == " << X << std::endl;
-                    score += (cycle * X);
+                    score += (cycle * position);
                 }
             }
-            std::cout << "#";
             cycle += 1;
         }
         if (cycle == check || cycle == 20){
             check += 40;
-            // std::cout << "result == " << cycle * X << " X == " << X << std::endl;
-            score += (cycle * X);
+            score += (cycle * position);
         }
-        X += increase;
+        position += increase;
+        std::cout << " X == " << position << std::endl;
     }
-    if (cycle%40 == 0){
+    std::cout << "\n\n" << y << "\n\n";
+    for (int i = 0; i < 6; i++){
+        for (int x = 0; x < 40; x++){
+            std::cout << map[i][x];
+        }
         std::cout << "\n";
     }
-    std::cout << "#";
     std::cout << "score " << cycle << std::endl;
     return (0);
 }
